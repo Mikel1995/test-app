@@ -1,21 +1,26 @@
 import React from 'react';
-import { Home } from './components/Home/Home';
+import Home from './components/Home/Home';
+import Login from './components/Login/Login';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
+  withRouter,
+  browserHistory 
 } from "react-router-dom";
 
 function App() {
   return (
-    <Router>
+    <div className="container-fluid">
       <Switch>
-        <Route path="/">
+        <Route path="/" exact={true}>
           <Home />
         </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
       </Switch>
-    </Router>
+    </div>
   );
 }
+export default withRouter(App);
 
-export default App;

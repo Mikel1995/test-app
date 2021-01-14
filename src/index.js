@@ -6,12 +6,20 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios'
+import {
+  BrowserRouter as Router,
+} from "react-router-dom";
 
+
+axios.defaults.baseURL = "http://localhost:3000/";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
