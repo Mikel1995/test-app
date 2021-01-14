@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "first_name": "Jim",
+      "last_name": "Morrison",
+      "email": "jim@gmail.com",
+      "username": "jim",
+      "password": "123456",
+      "birthday": "1943-12-08",
+      "phone": "+355671111111",
+      "userLevel": "Admin",
+      "address": "Paris, France",
+      "profile": "#"
+    },
+    {
+      "id": 2,
+      "first_name": "Lucy",
+      "last_name": "Ballmer",
+      "email": "lucyb56@gmail.com"
+    },
+    {
+      "id": 3,
+      "first_name": "Anna",
+      "last_name": "Smith",
+      "email": "annasmith23@gmail.com"
+    }
+  ]
+}
