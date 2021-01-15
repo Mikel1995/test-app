@@ -11,8 +11,8 @@ import NavBar from '../Common/Navbar';
 
 const Home = (props) => {
   const users = useSelector(selectUsers);
+  const loggedUser = useSelector(selectLoggedUser);
   const dispatch = useDispatch();
-
 
   const getUsers = async () => {
     const { data, status } = await axios.get('users');
@@ -30,11 +30,14 @@ const Home = (props) => {
     getUsers();
   }, [])
 
+
+  console.log(loggedUser);
+
   return (
     <div >
       <Container>
         <NavBar />
-        <UsersTable users={users} />
+        <UsersTable users={users} loggedUser={loggedUser.user !== null ? loggedUser.user : {}} />
       </Container>
     </div>
   );
