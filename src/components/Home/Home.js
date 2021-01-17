@@ -30,16 +30,10 @@ const Home = (props) => {
     getUsers();
   }, [])
 
-
-  console.log(loggedUser);
-
   return (
-    <div >
-      <Container>
-        <NavBar />
+    <>
         <UsersTable users={users} loggedUser={loggedUser.user !== null ? loggedUser.user : {}} />
-      </Container>
-    </div>
+    </>
   );
 };
 

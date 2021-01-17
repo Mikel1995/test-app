@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { deleteUserAction } from '../../../app/usersSlice';
+import { revertValueAsync } from '../../../helpers';
 import Alert from '../../Common/Alert';
 import Modal from '../../Common/Modal';
 
@@ -28,7 +30,7 @@ const UsersTable = ({ users, loggedUser }) => {
       <td>{user.profile}</td>
       <td>
         <div className="d-flex">
-          <Button disabled={!isUserLoggedAdmin} color="primary">Edit</Button>
+          <Link to={`/user/${user.id}`}> <Button color="primary">Edit</Button></Link>
           <Button disabled={!isUserLoggedAdmin} color="danger" className="ml-3" onClick={() => deleteButton(user.id)}>Delete</Button>
         </div>
       </td>
@@ -41,11 +43,6 @@ const UsersTable = ({ users, loggedUser }) => {
     setisOpenModal(true);
   }
 
-  const removeAlert = () => {
-    setInterval(() => {
-      setshowAlert(false);
-    }, 2000);
-  }
 
   const deleteUser = async (id) => {
     const { status } = await axios.delete(`users/${id}`);
@@ -53,7 +50,7 @@ const UsersTable = ({ users, loggedUser }) => {
       case 200:
         setshowAlert(true);
         setisOpenModal(false);
-        removeAlert();
+        revertValueAsync(setshowAlert, 2);
         dispatch(deleteUserAction({ userId: id }))
         break;
     }
@@ -61,7 +58,7 @@ const UsersTable = ({ users, loggedUser }) => {
 
   return (
     <div>
-      <Alert isOpen={showAlert} message="User has been deleted" />
+      <Alert isOpen={showAlert} color="danger" message="User has been deleted" />
       <table className="table table-striped table-hover">
         <thead>
           <tr><th colSpan="11" className="text-center"> Users Table </th></tr>
