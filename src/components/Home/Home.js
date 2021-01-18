@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Jumbotron } from 'reactstrap';
-import { withRouter } from "react-router-dom";
-import { selectLoggedUser, setLoggedUser } from '../../app/loggedUserSlice';
+import { useHistory } from "react-router-dom";
+import { selectLoggedUser } from '../../app/loggedUserSlice';
 import { selectUsers, setUsers } from '../../app/usersSlice';
 
 import UsersTable from './UsersTable/UsersTable'
 import axios from 'axios';
-import NavBar from '../Common/Navbar';
 
 const Home = (props) => {
+  let history = useHistory();
   const users = useSelector(selectUsers);
   const loggedUser = useSelector(selectLoggedUser);
   const dispatch = useDispatch();
@@ -27,6 +26,9 @@ const Home = (props) => {
   }
 
   useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      history.push('/login')
+    }
     getUsers();
   }, [])
 
@@ -37,4 +39,4 @@ const Home = (props) => {
   );
 };
 
-export default withRouter(Home)
+export default Home;

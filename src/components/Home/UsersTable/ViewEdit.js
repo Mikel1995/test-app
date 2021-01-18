@@ -25,13 +25,12 @@ const ViewEdit = (props) => {
     }
 
     const updateUser = async () => {
-        const { data, status } = await axios.put(`/users/${userId}`, { ...user });
+        const { status } = await axios.put(`/users/${userId}`, { ...user });
         switch (status) {
             case 200:
                 setshowAlert(true)
                 revertValueAsync(setshowAlert, 2);
                 break;
-
             default:
                 break;
         }

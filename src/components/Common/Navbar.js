@@ -1,39 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
+import { selectLoggedUser } from '../../app/loggedUserSlice';
 
 
-const NavBar = (props) => {
+const NavBar = props => {
+  const loggedUser = useSelector(selectLoggedUser);
   const [isOpen, setIsOpen] = useState(false);
+  let history = useHistory();
   const toggle = () => setIsOpen(!isOpen);
+
+  const logOut = () => {
+    localStorage.removeItem("token");
+    // localStorage.removeItem("username");
+    // localStorage.removeItem("password");
+    // localStorage.removeItem("rememberMe");
+    history.push("/login");
+  };
+
+  const goToProfile = () => {
+    const { user: {id} } = loggedUser;
+    history.push(`/user/${id}`);
+  }
+
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">Navbar</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Profile
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">Open Profile</a>
-                <a className="dropdown-item" href="#">Logout </a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <Navbar color="light" light expand="md">
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink to="/">Test App</NavLink>
+            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Name
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem onClick={()=>goToProfile()}>
+                  Open Profile
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem onClick={()=>logOut()}>
+                  Logout
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+        </Collapse>
+      </Navbar>
     </div>
   );
-}
+};
 
 export default NavBar;

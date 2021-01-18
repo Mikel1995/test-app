@@ -1,11 +1,7 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import { Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap'
 
 const InputComponent = ({ name, type, label, user, onChangeCallBack }) => {
-
-    console.log(user);
-
     const buildInputType = (type) => {
         if (type === 'select') {
             return <Input type="select" name={name} >

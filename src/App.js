@@ -23,14 +23,11 @@ function App() {
 
   return (
     <div className="container-fluid">
-      <Container>
       <Switch>
         <NavRoute path="/" exact={true} component={Home} />
         <Route path="/login" component={Login} />
-         
         <NavRoute path="/user/:id" component={ViewEdit} />
       </Switch>
-      </Container>
     </div>
   );
 }

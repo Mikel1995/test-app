@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import { InputGroup, InputGroupAddon, InputGroupText, Input, FormGroup, Label, Form } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
@@ -6,17 +6,20 @@ import { AiOutlineUser, AiOutlineKey } from 'react-icons/ai';
 import { Button } from 'reactstrap';
 import Alert from '../Common/Alert';
 import { setLoggedUser } from '../../app/loggedUserSlice';
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 
-const Login = ({ history }) => {
+const Login = () => {
+  let history = useHistory();
   const dispatch = useDispatch();
 
-  const [username, setusername] = useState('');
-  const [password, setpassword] = useState('');
+  const [username, setusername] = useState(localStorage.getItem('username'));
+  const [password, setpassword] = useState(localStorage.getItem('password'));
+  const [rememberMe, setrememberMe] = useState(false)
   const [isErrorResponse, setisErrorResponse] = useState(false);
 
   const login = async () => {
+    rememberUser();
     const { data: users, status } = await axios.get('users');
     switch (status) {
       case 200:
@@ -25,13 +28,28 @@ const Login = ({ history }) => {
           setisErrorResponse(true);
           return;
         }
-        history.push('/')
-        dispatch(setLoggedUser({ user:userFound, islogged: true }))
+        history.push('/');
+        dispatch(setLoggedUser({ user:userFound, islogged: true }));
+        localStorage.setItem('token', 'token_value');
         break;
       default:
         break;
     }
   }
+
+  const rememberUser = () => {
+    if (rememberMe) {
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
+      localStorage.setItem('remeberMe', true);
+    }
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      history.push('/')
+    }
+  },)
 
   return (
     <Container>
@@ -62,7 +80,7 @@ const Login = ({ history }) => {
             </FormGroup>
             <FormGroup check>
               <Label check>
-                <Input type="checkbox" />
+                <Input type="checkbox" checked={rememberMe} onChange={()=>setrememberMe(!rememberMe)} />
                 Remember me
              </Label>
             </FormGroup>
@@ -75,4 +93,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default withRouter(Login);
+export default Login;
