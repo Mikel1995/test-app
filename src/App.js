@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import ViewEdit from './components/Home/UsersTable/ViewEdit';
 import NavBar from './components/Common/Navbar';
-import { Container } from 'reactstrap';
 
 function App() {
 
@@ -26,7 +25,7 @@ function App() {
       <Switch>
         <NavRoute path="/" exact={true} component={Home} />
         <Route path="/login" component={Login} />
-        <NavRoute path="/user/:id" component={ViewEdit} />
+        <NavRoute path={["/user/:id", "/profile", "/add"]} component={ViewEdit} />
       </Switch>
     </div>
   );

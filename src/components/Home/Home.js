@@ -7,15 +7,14 @@ import { selectUsers, setUsers } from '../../app/usersSlice';
 import UsersTable from './UsersTable/UsersTable'
 import axios from 'axios';
 
-const Home = (props) => {
+const Home = () => {
   let history = useHistory();
   const users = useSelector(selectUsers);
-  const loggedUser = useSelector(selectLoggedUser);
+  const loggedUser = useSelector(selectLoggedUser).user || JSON.parse(localStorage.getItem('user'));
   const dispatch = useDispatch();
 
   const getUsers = async () => {
     const { data, status } = await axios.get('users');
-
     switch (status) {
       case 200:
         dispatch(setUsers(data))
@@ -34,7 +33,7 @@ const Home = (props) => {
 
   return (
     <>
-        <UsersTable users={users} loggedUser={loggedUser.user !== null ? loggedUser.user : {}} />
+        <UsersTable users={users} loggedUser={loggedUser} />
     </>
   );
 };

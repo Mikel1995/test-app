@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AiOutlineUserAdd } from "react-icons/ai";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,7 +11,6 @@ import Modal from "../../Common/Modal";
 
 const UsersTable = ({ users, loggedUser }) => {
   const dispatch = useDispatch();
-
   const [showAlert, setshowAlert] = useState(false);
   const [toDeleteUserId, settoDeleteUserId] = useState(null);
   const [isOpenModal, setisOpenModal] = useState(false);
@@ -46,7 +46,7 @@ const UsersTable = ({ users, loggedUser }) => {
           {user.address}
         </td>
         <td>
-          {user.profile}
+          <a href={user.profile}>Profile</a>
         </td>
         <td>
           <div className="d-flex">
@@ -96,9 +96,10 @@ const UsersTable = ({ users, loggedUser }) => {
       <table className="table table-striped table-hover">
         <thead>
           <tr>
-            <th colSpan="11" className="text-center">
+            <th colSpan="10" className="text-center">
               {" "}Users Table{" "}
             </th>
+            <th><Link to="/add" style={{ textDecoration: 'none' }}><Button color="success" outline block> <AiOutlineUserAdd/>{"  "}Add</Button></Link></th>
           </tr>
           <tr>
             <th>#</th>

@@ -8,7 +8,7 @@ export const loggedUserSlice = createSlice({
     },
     reducers: {
         setLoggedUser: (state, action) => {
-            state.user = action.payload.user || {}
+            state.user = action.payload.user 
             state.isLogged = action.payload.islogged || false
         }
     }
@@ -16,6 +16,6 @@ export const loggedUserSlice = createSlice({
 
 export const { setLoggedUser } = loggedUserSlice.actions;
 
-export const selectLoggedUser = state => state.loggedUser;
+export const selectLoggedUser = state => state.loggedUser ;
 
 export default loggedUserSlice.reducer;

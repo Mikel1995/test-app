@@ -15,7 +15,7 @@ const Login = () => {
 
   const [username, setusername] = useState(localStorage.getItem('username'));
   const [password, setpassword] = useState(localStorage.getItem('password'));
-  const [rememberMe, setrememberMe] = useState(false)
+  const [rememberMe, setrememberMe] = useState(localStorage.getItem('remeberMe'))
   const [isErrorResponse, setisErrorResponse] = useState(false);
 
   const login = async () => {
@@ -31,6 +31,7 @@ const Login = () => {
         history.push('/');
         dispatch(setLoggedUser({ user:userFound, islogged: true }));
         localStorage.setItem('token', 'token_value');
+        localStorage.setItem('user', JSON.stringify(userFound));
         break;
       default:
         break;
@@ -56,7 +57,7 @@ const Login = () => {
       <Row>
         <Col sm="12" md={{ size: 6, offset: 3 }}>
           <h3 className="text-center">Sign In</h3>
-          <Alert isOpen={isErrorResponse} message={'Incorrect username or password'} />
+          <Alert isOpen={isErrorResponse} color="danger" message={'Incorrect username or password'} />
           <Form >
             <FormGroup inline>
               <InputGroup>
@@ -65,7 +66,7 @@ const Login = () => {
                     <AiOutlineUser />
                   </InputGroupText>
                 </InputGroupAddon>
-                <Input onChange={(e) => setusername(e.target.value)} placeholder="username" type="email" />
+                <Input onChange={(e) => setusername(e.target.value)} placeholder="username" type="email" defaultValue={username} />
               </InputGroup>
             </FormGroup>
             <FormGroup>
@@ -75,7 +76,7 @@ const Login = () => {
                     <AiOutlineKey />
                   </InputGroupText>
                 </InputGroupAddon>
-                <Input onChange={(e) => setpassword(e.target.value)} placeholder="password" type="password" />
+                <Input onChange={(e) => setpassword(e.target.value)} placeholder="password" type="password" defaultValue={password} />
               </InputGroup>
             </FormGroup>
             <FormGroup check>

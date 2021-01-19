@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -15,24 +15,19 @@ import {
 } from 'reactstrap';
 import { selectLoggedUser } from '../../app/loggedUserSlice';
 
-
 const NavBar = props => {
-  const loggedUser = useSelector(selectLoggedUser);
+  const { first_name } = useSelector(selectLoggedUser).user || JSON.parse(localStorage.getItem('user'));
   const [isOpen, setIsOpen] = useState(false);
   let history = useHistory();
   const toggle = () => setIsOpen(!isOpen);
 
   const logOut = () => {
     localStorage.removeItem("token");
-    // localStorage.removeItem("username");
-    // localStorage.removeItem("password");
-    // localStorage.removeItem("rememberMe");
     history.push("/login");
   };
 
   const goToProfile = () => {
-    const { user: {id} } = loggedUser;
-    history.push(`/user/${id}`);
+    history.push("/profile");
   }
 
   return (
@@ -42,11 +37,11 @@ const NavBar = props => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink to="/">Test App</NavLink>
+              <Link to="/"><NavLink>Test App</NavLink></Link>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Name
+                {first_name}
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem onClick={()=>goToProfile()}>

@@ -11,19 +11,21 @@
       "phone": "+355671111111",
       "userLevel": "Admin",
       "address": "Paris, France",
-      "profile": "#"
+      "profile": "https://en.wikipedia.org/wiki/Jim_Morrison",
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/7/7f/Jim_Morrison_1969.JPG"
     },
     {
-      "id": 2,
-      "first_name": "Lucy",
-      "last_name": "Ballmer",
-      "email": "lucyb56@gmail.com"
-    },
-    {
-      "id": 3,
-      "first_name": "Anna",
-      "last_name": "Smith",
-      "email": "annasmith23@gmail.com"
+      "first_name": "Mick ",
+      "last_name": "Jagger",
+      "email": "mick@gmail.com",
+      "username": "mick",
+      "birthday": "2021-06-30",
+      "phone": "+355671111111",
+      "userLevel": "User",
+      "address": "Dartford, Kent, England",
+      "profile": "https://en.wikipedia.org/wiki/Mick_Jagger",
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Mick_Jagger_Deauville_2014.jpg",
+      "id": 2
     }
   ]
 }
