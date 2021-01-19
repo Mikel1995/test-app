@@ -5,9 +5,9 @@ React app
 
 ## 1. Clone this repo
 ### Checkout to develop branch
-## 2. npm run install
+## 2. npm install
 ## 3. npm run json-server
 ## 4. npm run start
 
-Username:Jim
+Username:jim
 Password:123456

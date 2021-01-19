@@ -23,7 +23,7 @@ const Login = () => {
     const { data: users, status } = await axios.get('users');
     switch (status) {
       case 200:
-        const userFound = users.find(user => (user.email === username || user.username === username) && (user.password === password));
+        const userFound = users.find(user => (user.email.toLowerCase() === username || user.username.toLowerCase() === username) && (user.password === password));
         if (userFound === undefined) {
           setisErrorResponse(true);
           return;
@@ -76,7 +76,7 @@ const Login = () => {
                     <AiOutlineKey />
                   </InputGroupText>
                 </InputGroupAddon>
-                <Input onChange={(e) => setpassword(e.target.value)} placeholder="password" type="password" defaultValue={password} />
+                <Input onChange={(e) => setpassword(e.target.value.toLowerCase())} placeholder="password" type="password" defaultValue={password} />
               </InputGroup>
             </FormGroup>
             <FormGroup check>

@@ -35,3 +35,14 @@ export const isUserValid = user => {
   }
   return true;
 };
+
+export const isInputDisabled = (pageType, loggedUser, userId) => {
+  if (loggedUser?.userLevel === "User" && loggedUser?.id !== userId) {
+    return true;
+  }
+  return false;
+};
+
+export const getPageType = router => {
+  return router.path === "/add" ? "Add" : "Update";
+};

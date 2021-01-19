@@ -83,7 +83,8 @@ const UsersTable = ({ users, loggedUser }) => {
           <a href={user.profile}>Profile</a>
         </td>
         <td>
-          <div className="d-flex">
+          {isUserLoggedAdmin ? 
+            <div className="d-flex">
             <Link to={`/user/${user.id}`}>
               {" "}<Button color="primary"  disabled={!isUserLoggedAdmin}>Edit</Button>
             </Link>
@@ -96,6 +97,11 @@ const UsersTable = ({ users, loggedUser }) => {
               Delete
             </Button>
           </div>
+          :
+          <Link to={`/user/${user.id}`}>
+            {" "}<Button color="success">View</Button>
+          </Link>
+          }
         </td>
       </tr>
     );
@@ -115,7 +121,7 @@ const UsersTable = ({ users, loggedUser }) => {
               {" "}Users Table{" "}
             </th>
             <th colSpan="3"><Search callBack={searchUser} /> </th>
-            <th><Link to="/add" style={{ textDecoration: 'none' }}><Button disabled={!isUserLoggedAdmin} color="success" outline block> <AiOutlineUserAdd/>{"  "}Add</Button></Link></th>
+            <th style={isUserLoggedAdmin===false? {display:'none'}:null}><Link to="/add" style={{ textDecoration: 'none' }}><Button color="success" outline block> <AiOutlineUserAdd/>{"  "}Add</Button></Link></th>
           </tr>
           <tr>
             <th>#</th>

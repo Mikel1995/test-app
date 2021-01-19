@@ -4,7 +4,7 @@ import { Col, FormGroup, Input, Row, FormText, Button, InputGroup, InputGroupAdd
 import InputComponent from './InputComponent';
 import axios from 'axios';
 import { displayConfig } from '../../../Const';
-import { isValid, isValidFormValid, revertValueAsync } from '../../../helpers';
+import {getPageType, isInputDisabled, isValidFormValid, revertValueAsync } from '../../../helpers';
 import Alert from '../../Common/Alert';
 import { useSelector } from 'react-redux';
 import { selectLoggedUser } from '../../../app/loggedUserSlice';
@@ -17,8 +17,7 @@ const ViewEdit = () => {
     const [showAlert, setshowAlert] = useState(false);
     const [password, setpassword] = useState('');
     const [retypedPassword, setretypedPassword] = useState('')
-    const isUserLoggedAdmin = loggedUser.userLevel === "Admin" ? true : false;
-    const pageType = router.path === '/add' ? 'Add' : 'Update';
+    const pageType = getPageType(router);
     const userId = getUserId(router, loggedUser);
 
     const getUser = async () => {
@@ -65,7 +64,7 @@ const ViewEdit = () => {
         return configInputs.map((input, i) => {
             return (
                 <>
-                    <InputComponent  key={i} isUserLoggedAdmin={isUserLoggedAdmin} label={input.label} type={input.type} name={input.name} user={user} onChangeCallBack={setuser} />
+                    <InputComponent pageType={pageType} key={i} loggedUser={loggedUser} canUpdate={input.canUpdate} label={input.label} type={input.type} name={input.name} user={user} onChangeCallBack={setuser} />
                     <br />
                 </>
             )
@@ -109,12 +108,12 @@ const ViewEdit = () => {
             </Col>
             <Col xs="9">
                 <Alert isOpen={showAlert} color="success" message={pageType === 'Add' ? "User has been Added" : 'User has been Updated'} />
-                <h2>{pageType === 'Add' ? 'Add User' : 'Update User'}</h2>
+                <h2> Update User</h2>
                 {user !== undefined ? <Row>
                     <Col xs="6">
                         {buildColumn(displayConfig.firstCol)}
                         {buildPasswordInputs()}
-                        <Button disabled={!isValidFormValid(user, pageType, password, retypedPassword)} color="success" size="lg" className="mr-5" onClick={() => updateorAddUser()}>Save</Button>
+                        {isInputDisabled(pageType, loggedUser, user.id) || <Button disabled={!isValidFormValid(user, pageType, password, retypedPassword) || isInputDisabled()} color="success" size="lg" className="mr-5" onClick={() => updateorAddUser()}>Save</Button>}
                         <Link to="/"><Button color="secondary" size="lg">Cancel</Button></Link>
                     </Col>
                     <Col xs="6">
