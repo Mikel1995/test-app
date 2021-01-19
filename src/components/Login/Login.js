@@ -28,10 +28,10 @@ const Login = () => {
           setisErrorResponse(true);
           return;
         }
-        history.push('/');
         dispatch(setLoggedUser({ user:userFound, islogged: true }));
         localStorage.setItem('token', 'token_value');
         localStorage.setItem('user', JSON.stringify(userFound));
+        history.push('/');
         break;
       default:
         break;
@@ -50,7 +50,7 @@ const Login = () => {
     if (localStorage.getItem('token')) {
       history.push('/')
     }
-  },)
+  },[])
 
   return (
     <Container>

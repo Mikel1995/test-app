@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -13,16 +13,18 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
+import { AiOutlineLogout } from "react-icons/ai";
 import { selectLoggedUser } from '../../app/loggedUserSlice';
 
 const NavBar = props => {
-  const { first_name } = useSelector(selectLoggedUser).user || JSON.parse(localStorage.getItem('user'));
+  const loggedUser = useSelector(selectLoggedUser).user || JSON.parse(localStorage.getItem('user'));
   const [isOpen, setIsOpen] = useState(false);
   let history = useHistory();
   const toggle = () => setIsOpen(!isOpen);
 
   const logOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     history.push("/login");
   };
 
@@ -37,11 +39,11 @@ const NavBar = props => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <Link to="/"><NavLink>Test App</NavLink></Link>
+              <Link to="/"><NavLink to="/">Test App</NavLink></Link>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                {first_name}
+                {loggedUser?.first_name}
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem onClick={()=>goToProfile()}>
@@ -49,7 +51,7 @@ const NavBar = props => {
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={()=>logOut()}>
-                  Logout
+                <AiOutlineLogout /> Logout 
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

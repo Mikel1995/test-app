@@ -1,8 +1,12 @@
 ## test-app
 React app
 
-# To get the frontend running locally:
+## To get the frontend running locally:
 
-Clone this repo
-npm install to install all req'd dependencies
-npm start to start the local server 
+# 1. Clone this repo
+# 2. npm run install
+# 3. npm run json-server
+# 4. npm run start
+
+Username:Jim
+Password:123456

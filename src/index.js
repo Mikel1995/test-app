@@ -12,8 +12,13 @@ import {
 } from "react-router-dom";
 
 
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "http://localhost:8000/";
 
+if (localStorage.getItem('token')) {
+  axios.defaults.headers = { 'Authorization': localStorage.getItem('token')}
+}
+
+console.error = () =>{}
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from "react-router-dom";
 import { selectLoggedUser } from '../../app/loggedUserSlice';
 import { selectUsers, setUsers } from '../../app/usersSlice';
 
 import UsersTable from './UsersTable/UsersTable'
 import axios from 'axios';
+import { isUserValid } from '../../helpers';
+import { useHistory } from 'react-router-dom';
 
 const Home = () => {
-  let history = useHistory();
+  const history = useHistory();
   const users = useSelector(selectUsers);
   const loggedUser = useSelector(selectLoggedUser).user || JSON.parse(localStorage.getItem('user'));
   const dispatch = useDispatch();
@@ -25,8 +26,8 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      history.push('/login')
+    if (!isUserValid(loggedUser)) {
+      history.push('/login');
     }
     getUsers();
   }, [])

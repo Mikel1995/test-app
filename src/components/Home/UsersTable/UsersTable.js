@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
@@ -8,15 +8,46 @@ import { deleteUserAction } from "../../../app/usersSlice";
 import { revertValueAsync } from "../../../helpers";
 import Alert from "../../Common/Alert";
 import Modal from "../../Common/Modal";
+import Search from "../../Common/Search";
 
 const UsersTable = ({ users, loggedUser }) => {
   const dispatch = useDispatch();
+  const [usersList, setusersList] = useState(users);
   const [showAlert, setshowAlert] = useState(false);
   const [toDeleteUserId, settoDeleteUserId] = useState(null);
   const [isOpenModal, setisOpenModal] = useState(false);
-  const isUserLoggedAdmin = loggedUser.userLevel === "Admin" ? true : false;
-  const buildTable = users => {
-    return users.map((user, i) =>
+  const isUserLoggedAdmin = loggedUser?.userLevel === "Admin" ? true : false;
+ 
+  const deleteButton = id => {
+    settoDeleteUserId(id);
+    setisOpenModal(true);
+  };
+
+  const searchUser = (searchTerm)=> {
+    const filteredUsers = users.filter(user=>(user.first_name.includes(searchTerm) || user.last_name.includes(searchTerm) || user.username.includes(searchTerm)));
+    setusersList(filteredUsers);
+  }
+
+  const deleteUser = async id => {
+    const { status } = await axios.delete(`users/${id}`);
+    switch (status) {
+      case 200:
+        setshowAlert(true);
+        setisOpenModal(false);
+        revertValueAsync(setshowAlert, 2);
+        dispatch(deleteUserAction({ userId: id }));
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    setusersList(users);
+  }, [users])
+
+  const buildTable = () => {
+    return usersList.map((user, i) =>
       <tr key={user.id}>
         <th scope="row">
           {i}
@@ -46,6 +77,9 @@ const UsersTable = ({ users, loggedUser }) => {
           {user.address}
         </td>
         <td>
+        <img style={{width:'40px', height:'40px'}}  src={user.photo} alt=""></img>
+      </td>
+        <td>
           <a href={user.profile}>Profile</a>
         </td>
         <td>
@@ -67,25 +101,6 @@ const UsersTable = ({ users, loggedUser }) => {
     );
   };
 
-  const deleteButton = id => {
-    settoDeleteUserId(id);
-    setisOpenModal(true);
-  };
-
-  const deleteUser = async id => {
-    const { status } = await axios.delete(`users/${id}`);
-    switch (status) {
-      case 200:
-        setshowAlert(true);
-        setisOpenModal(false);
-        revertValueAsync(setshowAlert, 2);
-        dispatch(deleteUserAction({ userId: id }));
-        break;
-      default:
-        break;
-    }
-  };
-
   return (
     <>
       <Alert
@@ -93,13 +108,14 @@ const UsersTable = ({ users, loggedUser }) => {
         color="danger"
         message="User has been deleted"
       />
-      <table className="table table-striped table-hover">
+      <table className="table table-sm table-striped table-hover">
         <thead>
           <tr>
-            <th colSpan="10" className="text-center">
+            <th colSpan="8" className="text-center">
               {" "}Users Table{" "}
             </th>
-            <th><Link to="/add" style={{ textDecoration: 'none' }}><Button color="success" outline block> <AiOutlineUserAdd/>{"  "}Add</Button></Link></th>
+            <th colSpan="3"><Search callBack={searchUser} /> </th>
+            <th><Link to="/add" style={{ textDecoration: 'none' }}><Button disabled={!isUserLoggedAdmin} color="success" outline block> <AiOutlineUserAdd/>{"  "}Add</Button></Link></th>
           </tr>
           <tr>
             <th>#</th>
@@ -111,12 +127,13 @@ const UsersTable = ({ users, loggedUser }) => {
             <th>Phone</th>
             <th>UserLevel</th>
             <th>Address</th>
+            <th>Photo</th>
             <th>Profile</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {buildTable(users)}
+          {buildTable()}
         </tbody>
       </table>
       <Modal

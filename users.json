@@ -19,6 +19,7 @@
       "last_name": "Jagger",
       "email": "mick@gmail.com",
       "username": "mick",
+      "password": "123456",
       "birthday": "2021-06-30",
       "phone": "+355671111111",
       "userLevel": "User",
@@ -26,6 +27,48 @@
       "profile": "https://en.wikipedia.org/wiki/Mick_Jagger",
       "photo": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Mick_Jagger_Deauville_2014.jpg",
       "id": 2
+    },
+    {
+      "first_name": "Till ",
+      "email": "till@hotmail.com",
+      "last_name": "Lindemann",
+      "birthday": "1964-04-01",
+      "username": "Lindemann",
+      "phone": "+355673087364",
+      "address": "Leipzig, East Germany",
+      "profile": "https://en.wikipedia.org/wiki/Till_Lindemann",
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/2/22/Till_Lindemann_-_2017287141036_2017-10-14_Buchmesse_-_Sven_-_1D_X_MK_II_-_188_-_AK8I8026.jpg",
+      "password": "till",
+      "id": 3,
+      "userLevel": "User"
+    },
+    {
+      "profile": "https://en.wikipedia.org/wiki/James_Hetfield",
+      "first_name": "James ",
+      "last_name": "Hetfield",
+      "email": "james@gmail.com",
+      "phone": "+355673087364",
+      "address": "Downey, California, U.S.",
+      "username": "Hetfield",
+      "birthday": "1963-03-07",
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/James_Hetfield_2017.jpg",
+      "password": "james",
+      "id": 4,
+      "userLevel": "Admin"
+    },
+    {
+      "first_name": "David ",
+      "last_name": "Gilmour",
+      "email": "david@gmail.com",
+      "birthday": "1946-06-03",
+      "username": "Gilmour",
+      "phone": "06646565",
+      "address": "Cambridge, England",
+      "profile": "https://en.wikipedia.org/wiki/David_Gilmour",
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/f/f2/David_Gilmour_Argentina_2015_%28cropped%29.jpg",
+      "password": "123456",
+      "id": 5,
+      "userLevel": "User"
     }
   ]
 }
